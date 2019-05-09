@@ -1,1 +1,22 @@
+.installed.cfg
+bin
+
+lib
+lib64
+
 *.save
+.vscode
+
+# Byte-compiled / optimized / DLL files
+# src/philips_hue/__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# environment file
+.env
+
+# setup guide
+SETUP_GUIDE.md

@@ -13,9 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.conf.urls import url
+# from django.urls import path,re_path,include
+from django.urls import path,include
 from django.contrib import admin
-from django.urls import path
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+# from timeclock.views import ActivityView
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # url(r'^$',ActivityView.as_view()),
+    url(r'admin/', admin.site.urls),
+    path('',include('philips_hue.urls'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

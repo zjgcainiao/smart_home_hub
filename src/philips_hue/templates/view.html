@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div  class="jumbotron">
+        <h1>Smart Home System</h1>  
+        <p class="lead">Here are the lights in my home </p>
+    </div>
+</div>
+<div class="container">
+    <div class="table-responsive">
+        <table class ="table table-striped table-bordered">
+            <thead>
+                <th>light name</th>
+                <th>light id</th>
+                <th>light status</th>
+                <th>light brightness</th>            
+            <tbody>
+                    {% for light in lights_group %}
+                    <tr>
+                        <td>{{light.name}} </td>
+                        <td>{{light.light_id}} </td>
+                        <td>
+                            {% if light.on %}
+                                On
+                            {% else %}
+                                Off
+                            {% endif %}
+                        </td>
+                        <td>
+                                {% if light.on %}
+                                    {{light.brightness}}
+                                {% else %}
+                                    {{0}}
+                                {% endif %}
+                            </td>
+                    </tr>
+                    {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    <!-- end of table -->
+    <button class="btn btn-primary btn-lg" id='updatelights' href="#" value="Turn the lights">Turn On the lights</button>
+</div>
+<!-- end of container -->
+
+<!-- </div> -->
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+        $('#updatelights').click(function(){
+              $.ajax({
+                       type: "POST",
+                       url: "{% url 'update_lights' %}",
+                       data: {'lights_group': "{{lights_group}}", 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                       dataType: "json",
+                       success: function(result) {
+                              alert("this is correct");
+                        }
+                        // error: function(rs, e) {
+                        //        alert("Bummer. It does not work properly");
+                        // }
+                  }); 
+            })
+</script>
+
+{% endblock %}
+
+
+</html> 
