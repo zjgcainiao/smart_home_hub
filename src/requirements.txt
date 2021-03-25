@@ -172,7 +172,7 @@ python-dateutil==2.7.3
 python-dotenv==0.9.1
 pytz==2018.4
 PyWavelets==0.5.2
-PyYAML==3.12
+PyYAML==5.4
 pyzmq==17.0.0
 qhue==1.0.12
 QtAwesome==0.4.4
@@ -404,7 +404,7 @@ python-dateutil==2.7.3
 python-dotenv==0.9.1
 pytz==2018.4
 PyWavelets==0.5.2
-PyYAML==3.12
+PyYAML==5.4
 pyzmq==17.0.0
 qhue==1.0.12
 QtAwesome==0.4.4
