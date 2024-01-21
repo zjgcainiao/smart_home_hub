@@ -1,36 +1,39 @@
 
 from django.shortcuts import render,redirect
-
+from huesdk import Discover
 # builds the response object
 from django.http import HttpResponse
 from django.http import Http404
 from .models import MonitorLights
+from decouple import config, Csv
 
 #import the phue module to return the status of all lights
-from phue import Bridge, Light
+# from huesdk import Discover
 import os
 import logging
 from dotenv import load_dotenv
-load_dotenv()
+
 HUE_BRIDGE_IP_ADDRESS=os.getenv("HUE_BRIDGE_IP_ADDRESS")
 HUE_BRIDGE_USERNAME=os.getenv("HUE_BRIDGE_USERNAME")
 # Create your views here.
 
 #connect to the Hue Bridge within the network
 #this modules should be in the model.py??
-b=Bridge(HUE_BRIDGE_IP_ADDRESS,HUE_BRIDGE_USERNAME)
-b.connect()
-lights=b.lights
+# b=Bridge(HUE_BRIDGE_IP_ADDRESS,HUE_BRIDGE_USERNAME)
+discover = Discover()
+b=discover
+# b.connect()
+# lights=b.lights
 
-light_name_list=[]
-light_id_list=[]
-light_on_list=[] # Boolean
-light_bri_list=[]
-for _ in b.lights:
-    light_name_list.append(_.name)
-    light_id_list.append(_.light_id)
-    light_on_list.append(_.on)
-    light_bri_list.append(_.brightness/254 if _.on else 0)
+# light_name_list=[]
+# light_id_list=[]
+# light_on_list=[] # Boolean
+# light_bri_list=[]
+# for _ in b.lights:
+#     light_name_list.append(_.name)
+#     light_id_list.append(_.light_id)
+#     light_on_list.append(_.on)
+#     light_bri_list.append(_.brightness/254 if _.on else 0)
 
 
 def index(request):

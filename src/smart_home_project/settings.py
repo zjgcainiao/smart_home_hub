@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+from decouple import config, Csv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,12 +23,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0dew%r_&%)dg)a4foa=#w&#q1cejjj9-tq+3*=3gavim_p!y-('
+# SECURITY WARNING: keep the secret key used in production secret!
+try:
+    SECRET_KEY = config("DJANGO_SECRET_KEY")
+except KeyError as e:
+    raise RuntimeError(
+        "Could not find a Django SECRET_KEY in the environment variables.") from e
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['192.168.0.3','localhost','127.0.0.1']
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default="localhost", cast=Csv())
 
 
 # Application definition
@@ -39,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'timeclock',
-    'philips_hue'
+    'philips_hue',
+    # 'huesdk',
 ]
 
 MIDDLEWARE = [

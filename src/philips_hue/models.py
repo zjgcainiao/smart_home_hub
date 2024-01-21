@@ -9,6 +9,7 @@ LIGHT_STATUSES=[
 ]
 
 class MonitorLights(models.Model):
+    id = models.AutoField(primary_key=True)
     light_name=models.CharField(max_length=120)
     light_product_id =models.CharField(max_length=120)
     light_mode=models.CharField(max_length=20)
@@ -20,6 +21,7 @@ class MonitorLights(models.Model):
         return self.light_status
 
 class MonitorBridge(models.Model):
+    id = models.AutoField(primary_key=True)
     BRIDGE_CHECK_CHOICE=[
         ('lights','Lights'),
         ('groups','Groups'),
@@ -32,5 +34,7 @@ class MonitorBridge(models.Model):
     bridge_unique_id=models.CharField(max_length=120,null=True)
     def __str__(self):
         return self.bridge_ip_address
-
+    class Meta:
+        db_table = "MonitorBridge"
+        verbose_name_plural="MonitorBridges"
 
