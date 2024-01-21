@@ -1,12 +1,13 @@
 
 from django.shortcuts import render,redirect
-from huesdk import Discover
+from huesdk import Discover, Hue
 # builds the response object
 from django.http import HttpResponse
 from django.http import Http404
 from .models import MonitorLights
 from decouple import config, Csv
-
+from philips_hue.models import MonitorBridge
+from django.utils import timezone
 #import the phue module to return the status of all lights
 # from huesdk import Discover
 import os
@@ -20,8 +21,25 @@ HUE_BRIDGE_USERNAME=os.getenv("HUE_BRIDGE_USERNAME")
 #connect to the Hue Bridge within the network
 #this modules should be in the model.py??
 # b=Bridge(HUE_BRIDGE_IP_ADDRESS,HUE_BRIDGE_USERNAME)
+
+# https://discovery.meethue.com/ is the equivalent of the following code
+# Discover the Hue Bridges
 discover = Discover()
-b=discover
+bridges = discover.find_hue_bridge_mdns(timeout=10)
+# Iterate through the discovered bridges
+for bridge_info in bridges:
+    # Create a new MonitorBridge instance
+    monitor_bridge = MonitorBridge(
+        bridge_name=bridge_info["name"],
+        bridge_ip_address=bridge_info["internalipaddress"],
+        bridge_localtime=timezone.now(),  # Set current time for bridge_localtime
+        bridge_timezone="Your_Timezone",  # Set your timezone or fetch it dynamically
+        bridge_unique_id=bridge_info["id"]
+    )
+    
+    # Save the instance to the database
+    monitor_bridge.save()
+# print(discover.find_hue_bridge_mdns(timeout=10))
 # b.connect()
 # lights=b.lights
 
