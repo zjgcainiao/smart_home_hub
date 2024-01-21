@@ -1,7 +1,7 @@
 .installed.cfg
 bin
-
-lib
+includes/
+lib/
 lib64
 
 *.save
@@ -20,3 +20,10 @@ lib64
 
 # setup guide
 SETUP_GUIDE.md
+
+# virtual environemnts
+hub_env/
+myenv/
+
+# MacOS files
+DS_STORE
