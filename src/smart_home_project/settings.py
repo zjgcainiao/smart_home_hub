@@ -13,8 +13,11 @@ import logging
 import os
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
 from decouple import config, Csv
+
+load_dotenv(find_dotenv())
+
+logger=logging.getLogger('django')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,7 +51,64 @@ DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default="localhost", cast=Csv())
 
-logging.basicConfig(level=logging.INFO) 
+
+
+# add logging to the project
+# src/logs/django.log
+LOGGING_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOGGING_DIR):
+    os.makedirs(LOGGING_DIR)
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/django.log',  # Update this path
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        # Add any other loggers for your app here
+        'django.db': {
+            'handlers': ['file', 'console'],
+            'level': 'FATAL',
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.mangement_script': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
 
 # Application definition
 
@@ -62,6 +122,7 @@ INSTALLED_APPS = [
     # 'timeclock',
     'philips_hue',
     # 'huesdk',
+    'celery',
 ]
 
 MIDDLEWARE = [
@@ -98,12 +159,24 @@ WSGI_APPLICATION = 'smart_home_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_DATABSASE1', default='smart_home_hub'),
+        'USER': config('DB_APP_USER').lower(),
+        'PASSWORD': config('DB_APP_USER_PASSWORD'),
+        'HOST': config('DB_SERVER',default='localhost'),  # Set to empty string for localhost.
+        'PORT': '',           # Set to empty string for default.
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation

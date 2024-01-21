@@ -1,0 +1,59 @@
+{% extends 'philips_hue/base.html' %}
+
+{% block content %}
+<style>
+    .btn-resource {
+        margin: 5px;
+        /* Add space around buttons */
+        padding: 10px 20px;
+        /* Increase padding for a larger, more tappable area */
+    }
+
+    .btn-group {
+        display: flex;
+        /* Use flexbox for better alignment and spacing */
+        flex-wrap: wrap;
+        /* Allow buttons to wrap to the next line on smaller screens */
+        justify-content: space-between;
+        /* Distribute space between buttons evenly */
+        align-items: center;
+        /* Align items vertically */
+    }
+</style>
+<div class="container p-2 m-2">
+    <div class="card">
+        <h2 class="card-header p-2 m-2">Smart Home System - Version 01</h2>
+
+        <div class="card-body">
+            <h3>Bridge Information</h3>
+            {% if bridge %}
+            <p>Name: {{ bridge.bridge_name }}</p>
+            <p>IP Address: {{ bridge.bridge_ip_address }}</p>
+            <p>Local Time: {{ bridge.bridge_localtime }}</p>
+            <p>Time Zone: {{ bridge.bridge_timezone }}</p>
+            <p>Unique ID: {{ bridge.bridge_unique_id }}</p>
+            {% else %}
+            <p>No bridge information available.</p>
+            {% endif %}
+        </div>
+        <!-- end of card-body  -->
+        <div class="card-body">
+            <h3 class="card-title p-1 m-1">Access Resources</h3>
+            <div class="btn-group justify-spacing-between" role="group" aria-label="Access Resources">
+                <a href="{% url 'philips_hue:light_list' %}" class="btn btn-primary btn-resource">Lights</a>
+                <a href="{% url 'philips_hue:group_list' %}" class="btn btn-primary btn-resource">Groups</a>
+                <button type="button" class="btn btn-secondary btn-resource">Groups</button>
+                <button type="button" class="btn btn-secondary btn-resource">Scenes</button>
+                <button type="button" class="btn btn-secondary btn-resource">Schedules</button>
+                <button type="button" class="btn btn-secondary btn-resource">Rules</button>
+                <button type="button" class="btn btn-secondary btn-resource">Sensors</button>
+                <button type="button" class="btn btn-secondary btn-resource">Config</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

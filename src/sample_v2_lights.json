@@ -1,0 +1,1562 @@
+{
+  "errors": [],
+  "data": [
+    {
+      "id": "017e6f06-aa8b-4086-bc0d-8c8b25285943",
+      "id_v1": "/lights/14",
+      "owner": {
+        "rid": "a55996f2-3939-43dd-a3ef-3ecad8c92b33",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue outdoor bollard 1",
+        "archetype": "bollard",
+        "function": "functional"
+      },
+      "product_data": { "function": "functional" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 30.43, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "045215ef-a879-4273-9879-e60046a0fce4",
+      "id_v1": "/lights/10",
+      "owner": {
+        "rid": "d1364fcc-1e09-4540-b956-a73be753c7af",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue color lamp 2",
+        "archetype": "sultan_bulb",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.20000000298023225 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "0b5ee3b8-1d5d-49c8-8ba8-8ad4f85b5177",
+      "id_v1": "/lights/5",
+      "owner": {
+        "rid": "05195c10-e4ae-4323-b5c2-fdc32c208549",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue play 2",
+        "archetype": "hue_play",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "10bae654-11f8-4890-8954-e857be807d1b",
+      "id_v1": "/lights/9",
+      "owner": {
+        "rid": "15069706-f2fc-4ea0-b6ee-bb863718dae0",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue color lamp 1",
+        "archetype": "sultan_bulb",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.20000000298023225 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "21f9bc57-5fdd-49e8-8101-209d007f956a",
+      "id_v1": "/lights/25",
+      "owner": {
+        "rid": "80710747-e041-47e4-bbbb-3fb2b80dca52",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Office Outdoor spot 3",
+        "archetype": "ground_spot",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 153,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.3129, "y": 0.3291 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": { "signal_values": ["no_signal", "on_off"] },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "225ba4d4-dcc0-4413-9a16-2e39beec2cee",
+      "id_v1": "/lights/8",
+      "owner": {
+        "rid": "190b066a-1359-4fdc-b1e1-371fa3715822",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Play gradient tube 1",
+        "archetype": "hue_tube",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.009999999776482582 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": null,
+        "mirek_valid": false,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.17, "y": 0.7 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "gradient": {
+        "points": [],
+        "mode": "interpolated_palette",
+        "points_capable": 5,
+        "mode_values": [
+          "interpolated_palette",
+          "interpolated_palette_mirrored"
+        ],
+        "pixel_count": 6
+      },
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "timed_effects": {
+        "status_values": ["no_effect", "sunrise"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "sunrise"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "28154f28-cc37-4649-9adf-8e265771d310",
+      "id_v1": "/lights/20",
+      "owner": {
+        "rid": "2ed9f198-a62e-4f41-b06e-0d285e583532",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue white lamp 1",
+        "archetype": "classic_bulb",
+        "fixed_mired": 366,
+        "function": "functional"
+      },
+      "product_data": { "function": "functional" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 2.0 },
+      "dimming_delta": {},
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": { "signal_values": ["no_signal", "on_off"] },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } }
+      },
+      "type": "light"
+    },
+    {
+      "id": "2d06ab6b-209d-4afc-be79-cb63ad642e75",
+      "id_v1": "/lights/6",
+      "owner": {
+        "rid": "6458cd4e-4055-4d58-bbc0-5dab0a35044b",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue play 3",
+        "archetype": "hue_play",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "41a86af2-e787-44c3-a0b9-3258563154d3",
+      "id_v1": "/lights/18",
+      "owner": {
+        "rid": "57949bde-47cf-437d-869b-a94f404987e5",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue color table 1",
+        "archetype": "table_shade",
+        "function": "functional"
+      },
+      "product_data": { "function": "functional" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": null,
+        "mirek_valid": false,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.172, "y": 0.7446 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "powerup": {
+        "preset": "last_on_state",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "previous" },
+        "color": { "mode": "previous" }
+      },
+      "type": "light"
+    },
+    {
+      "id": "493ada0a-bfad-475e-89ee-28b8f3986188",
+      "id_v1": "/lights/11",
+      "owner": {
+        "rid": "9ab2ac7c-3f14-4ab4-982a-55433f06bc72",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue color lamp 3",
+        "archetype": "sultan_bulb",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.20000000298023225 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "51cd404b-9285-46cf-8561-d9d5339208ce",
+      "id_v1": "/lights/4",
+      "owner": {
+        "rid": "1dc580d8-ad06-4a3b-bf26-33cc777857eb",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue lightstrip plus 1",
+        "archetype": "hue_lightstrip",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 64.82, "min_dim_level": 0.03999999910593033 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": null,
+        "mirek_valid": false,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.2712, "y": 0.2843 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "55a175ce-ab38-4f64-852b-9388bd59addc",
+      "id_v1": "/lights/22",
+      "owner": {
+        "rid": "a3f8be85-849a-443c-adc9-bb2576689e78",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue color lamp 5",
+        "archetype": "sultan_bulb",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.20000000298023225 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": null,
+        "mirek_valid": false,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.17, "y": 0.7 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "581dcb11-aa92-49d1-9d8e-53ef7bd1a39d",
+      "id_v1": "/lights/17",
+      "owner": {
+        "rid": "27b764bb-93b8-42fa-bd35-3dc39fbc2244",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue Calla outdoor bollard 1",
+        "archetype": "bollard",
+        "function": "functional"
+      },
+      "product_data": { "function": "functional" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 30.43, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "58930bf1-5aad-4387-bf82-42ec7a206bd1",
+      "id_v1": "/lights/21",
+      "owner": {
+        "rid": "4f36fe18-c6a3-41dc-9e09-ee8d58769adb",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue color lamp 4",
+        "archetype": "sultan_bulb",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.20000000298023225 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": null,
+        "mirek_valid": false,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.17, "y": 0.7 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "658e74af-6f10-4531-9710-56f45906729f",
+      "id_v1": "/lights/7",
+      "owner": {
+        "rid": "657e9c7a-8e5e-40a7-8887-0f58527a0101",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue smart plug stairway",
+        "archetype": "plug",
+        "function": "functional"
+      },
+      "product_data": { "function": "functional" },
+      "identify": {},
+      "on": { "on": true },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": [] },
+      "mode": "normal",
+      "powerup": {
+        "preset": "powerfail",
+        "configured": true,
+        "on": { "mode": "previous" }
+      },
+      "type": "light"
+    },
+    {
+      "id": "729ca32d-68f5-419f-bf19-96f19b100975",
+      "id_v1": "/lights/29",
+      "owner": {
+        "rid": "b36fd9a2-5e47-4061-954d-56c0c4cb3fc6",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue backyard  pedestal 2",
+        "archetype": "floor_lantern",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4574, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "81c165fc-da15-43c0-87cb-536354a1fd51",
+      "id_v1": "/lights/13",
+      "owner": {
+        "rid": "7df1cd13-9bd2-4b7e-936f-6fd7a62c83f3",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue play 4",
+        "archetype": "hue_play",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": null,
+        "mirek_valid": false,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.17, "y": 0.7 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "84a36134-a37a-4837-8ba4-5a533c633021",
+      "id_v1": "/lights/15",
+      "owner": {
+        "rid": "74c39b1f-f379-4413-93a2-470008c94ef5",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue outdoor pedestal 1",
+        "archetype": "floor_lantern",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 30.43, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "8dd341cb-d5fc-4a6d-8e7d-26431d2d5878",
+      "id_v1": "/lights/23",
+      "owner": {
+        "rid": "c4ed58d2-fd2c-4a23-afd5-3fdb1f59e699",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Office Spot 1",
+        "archetype": "ground_spot",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 153,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.3129, "y": 0.3291 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "9b1dd9f6-fe46-4833-9b73-4c469053a73f",
+      "id_v1": "/lights/28",
+      "owner": {
+        "rid": "0eef04f3-019c-48c7-9bdc-e21922bac8ef",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue outdoor backyard bollard 2",
+        "archetype": "bollard",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "a4ca70d7-5664-46c6-8648-0cbeefa16344",
+      "id_v1": "/lights/3",
+      "owner": {
+        "rid": "83bf336a-8305-4583-9198-0725471f407f",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue play 1",
+        "archetype": "hue_play",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": false },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": null,
+        "mirek_valid": false,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.17, "y": 0.7 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "ad39b3a7-7f88-4c7b-9bd7-cf49ca7142c5",
+      "id_v1": "/lights/26",
+      "owner": {
+        "rid": "a1c49010-5a99-432a-b46d-0d9e2a26e490",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue back Patio pedestal 1",
+        "archetype": "floor_lantern",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4574, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "bd3cc6be-f5c6-48e5-a138-05e278fb5b89",
+      "id_v1": "/lights/16",
+      "owner": {
+        "rid": "403440cb-e26e-4ee9-855b-54899e71c60e",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue Impress outdoor wall 1",
+        "archetype": "wall_lantern",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 30.43, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "bd555f8e-6d96-48a7-a112-6cc189250ffb",
+      "id_v1": "/lights/27",
+      "owner": {
+        "rid": "e9e20983-6ef3-4bd1-b09c-dae5326920b6",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue back patio bollard 1",
+        "archetype": "bollard",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "d5594227-6697-4532-a58a-c08ab4cd14de",
+      "id_v1": "/lights/2",
+      "owner": {
+        "rid": "da69aaf2-9167-412a-8dae-ea8189490b86",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue ambiance lamp 1",
+        "archetype": "sultan_bulb",
+        "function": "functional"
+      },
+      "product_data": { "function": "functional" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.20000000298023225 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 454 }
+      },
+      "color_temperature_delta": {},
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": { "signal_values": ["no_signal", "on_off"] },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "e29977ee-35cd-43ae-9063-534b9f3b549d",
+      "id_v1": "/lights/24",
+      "owner": {
+        "rid": "8bb6a64c-f5d7-406c-8c3f-94f57aa25dc1",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue office outdoor spot 2",
+        "archetype": "ground_spot",
+        "function": "decorative"
+      },
+      "product_data": { "function": "decorative" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 50.2, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 153,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.3129, "y": 0.3291 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": { "signal_values": ["no_signal", "on_off"] },
+      "mode": "normal",
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "e29d4a0f-d592-48d2-80b8-7476973a5303",
+      "id_v1": "/lights/19",
+      "owner": {
+        "rid": "4eb3690a-6c59-4fc0-b13c-73c28dc73107",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue Econic outdoor wall 1",
+        "archetype": "wall_lantern",
+        "function": "mixed"
+      },
+      "product_data": { "function": "mixed" },
+      "identify": {},
+      "on": { "on": true },
+      "dimming": { "brightness": 100.0, "min_dim_level": 0.10000000149011612 },
+      "dimming_delta": {},
+      "color_temperature": {
+        "mirek": 366,
+        "mirek_valid": true,
+        "mirek_schema": { "mirek_minimum": 153, "mirek_maximum": 500 }
+      },
+      "color_temperature_delta": {},
+      "color": {
+        "xy": { "x": 0.4573, "y": 0.41 },
+        "gamut": {
+          "red": { "x": 0.6915, "y": 0.3083 },
+          "green": { "x": 0.17, "y": 0.7 },
+          "blue": { "x": 0.1532, "y": 0.0475 }
+        },
+        "gamut_type": "C"
+      },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none", "dynamic_palette"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": ["breathe"] },
+      "signaling": {
+        "signal_values": ["no_signal", "on_off", "on_off_color", "alternating"]
+      },
+      "mode": "normal",
+      "effects": {
+        "status_values": ["no_effect", "candle", "fire", "prism"],
+        "status": "no_effect",
+        "effect_values": ["no_effect", "candle", "fire", "prism"]
+      },
+      "powerup": {
+        "preset": "safety",
+        "configured": true,
+        "on": { "mode": "on", "on": { "on": true } },
+        "dimming": { "mode": "dimming", "dimming": { "brightness": 100.0 } },
+        "color": {
+          "mode": "color_temperature",
+          "color_temperature": { "mirek": 366 }
+        }
+      },
+      "type": "light"
+    },
+    {
+      "id": "e86429c0-b739-4b2c-9779-a45a0b58c34e",
+      "id_v1": "/lights/1",
+      "owner": {
+        "rid": "3e0f5424-d560-44ee-8516-e117210d80fa",
+        "rtype": "device"
+      },
+      "metadata": {
+        "name": "Hue smart plug 1",
+        "archetype": "plug",
+        "function": "functional"
+      },
+      "product_data": { "function": "functional" },
+      "identify": {},
+      "on": { "on": false },
+      "dynamics": {
+        "status": "none",
+        "status_values": ["none"],
+        "speed": 0.0,
+        "speed_valid": false
+      },
+      "alert": { "action_values": [] },
+      "mode": "normal",
+      "powerup": {
+        "preset": "powerfail",
+        "configured": true,
+        "on": { "mode": "previous" }
+      },
+      "type": "light"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{% extends 'philips_hue/base.html' %}
+{% block content %}
+
+<script>
+    function toggleCollapse(elementId) {
+        var element = document.getElementById(elementId);
+        if (element.style.display === "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
+    }
+</script>
+<div class="container p-2 m-2">
+    <div class="Card card-hover">
+        <h2> Light's Technical Details </h2>
+        <p class="lead">Here are the fields, methods available in the light object</p>
+    </div>
+
+    <div class="card-body p-2 m-2">
+        <!-- Regular Methods -->
+        <div>
+            <h3>Regular Methods</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for method, value in light.regular_methods.items %}
+                    <tr>
+                        <td>{{ method }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Special Methods - Collapsible -->
+        <div>
+            <button type="button" class="btn btn-info" onclick="toggleCollapse('special-methods')">Toggle Special
+                Methods</button>
+            <div id="special-methods" style="display:none;">
+                <h3>Special Methods</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for method, value in light.special_methods.items %}
+                        <tr>
+                            <td>{{ method }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end of div for special_methods -->
+    </div>
+    <!-- end of card-body -->
+</div>
+{% endblock %}
