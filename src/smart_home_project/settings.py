@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+import logging
 import os
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
@@ -48,6 +48,7 @@ DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default="localhost", cast=Csv())
 
+logging.basicConfig(level=logging.INFO) 
 
 # Application definition
 

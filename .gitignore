@@ -1,14 +1,17 @@
 .installed.cfg
-bin
-includes/
+bin/
+include/
 lib/
-lib64
+lib64/
+migrations/
 
 *.save
 .vscode
 
 # Byte-compiled / optimized / DLL files
 # src/philips_hue/__pycache__/
+__pycache__
+*/__pycache__
 *.py[cod]
 *$py.class
 
@@ -27,3 +30,4 @@ myenv/
 
 # MacOS files
 DS_STORE
+

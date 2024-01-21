@@ -1,5 +1,7 @@
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
+#import the phue module to return the status of all lights
+# from huesdk import Discover
 from huesdk import Discover, Hue
 # builds the response object
 from django.http import HttpResponse
@@ -8,40 +10,13 @@ from .models import MonitorLights
 from decouple import config, Csv
 from philips_hue.models import MonitorBridge
 from django.utils import timezone
-#import the phue module to return the status of all lights
-# from huesdk import Discover
+from django.db import transaction
 import os
 import logging
 from dotenv import load_dotenv
-
-HUE_BRIDGE_IP_ADDRESS=os.getenv("HUE_BRIDGE_IP_ADDRESS")
-HUE_BRIDGE_USERNAME=os.getenv("HUE_BRIDGE_USERNAME")
-# Create your views here.
-
-#connect to the Hue Bridge within the network
-#this modules should be in the model.py??
-# b=Bridge(HUE_BRIDGE_IP_ADDRESS,HUE_BRIDGE_USERNAME)
-
-# https://discovery.meethue.com/ is the equivalent of the following code
-# Discover the Hue Bridges
-discover = Discover()
-bridges = discover.find_hue_bridge_mdns(timeout=10)
-# Iterate through the discovered bridges
-for bridge_info in bridges:
-    # Create a new MonitorBridge instance
-    monitor_bridge = MonitorBridge(
-        bridge_name=bridge_info["name"],
-        bridge_ip_address=bridge_info["internalipaddress"],
-        bridge_localtime=timezone.now(),  # Set current time for bridge_localtime
-        bridge_timezone="Your_Timezone",  # Set your timezone or fetch it dynamically
-        bridge_unique_id=bridge_info["id"]
-    )
-    
-    # Save the instance to the database
-    monitor_bridge.save()
-# print(discover.find_hue_bridge_mdns(timeout=10))
-# b.connect()
-# lights=b.lights
+import json  # Import the json module
+import requests
+from philips_hue.utilities import get_attributes,get_hue_connection,sync_lights_with_db
 
 # light_name_list=[]
 # light_id_list=[]
@@ -55,19 +30,39 @@ for bridge_info in bridges:
 
 
 def index(request):
-    try:
-        bright_status=MonitorLights.objects.all()
-        # context = {'the light status': bright_status}
-        context ={"lights_group":lights}
 
-    except MonitorLights.DoesNotExist:
-        raise Http404("There is no light info available.")
-    return render(request, 'view.html', context)
+    hue = get_hue_connection()
+    # print(discover.find_hue_bridge_mdns(timeout=10))
+    if not hue:
+        # Handle the error appropriately
+        context = {'error': 'Unable to connect to Hue Bridge.'}
+        return render(request, 'philips_hue/main.html', context)
+    lights=hue.get_lights()
+    context={'lights':lights}
+    return render(request, 'philips_hue/main.html', context)
 
-def index_detail(request,light_id=3):
-    return HttpResponse ("<h3>This is the detail page <p>light id: {}</p>.</h3>".format(light_id))
 
-def update_lights(request):
+
+def get_light_list(request):
+    # Sync Hue lights with the MonitorLights model
+    lights = MonitorLights.objects.all()
+    if not lights:
+        lights = sync_lights_with_db()
+
+    # Get the lights from the Hue bridge
+    # lights = hue.get_lights()  # This is a placeholder, adjust based on how you fetch lights from your Hue connection
+
+    # Create context to pass to the template
+    context = {'lights': lights}
+    return render(request, 'philips_hue/light_list.html', context)
+
+
+def light_detail(request, pk):
+    light = get_object_or_404(MonitorLights, pk=pk)
+    return render(request, 'philips_hue/light_detail.html', {'light': light})
+
+def update_light(request,pk):
+    lights = MonitorLights.objects.get(pk=pk)
     logging.warning("I am calling the update_lights function in the view. lights_group is {}".format(lights))
     try:
         for light in lights:
