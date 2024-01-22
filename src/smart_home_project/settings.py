@@ -120,9 +120,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'timeclock',
+    'gunicorn',
     'philips_hue',
     # 'huesdk',
     'celery',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +135,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'smart_home_project.middlewares.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'smart_home_project.urls'
@@ -159,17 +162,29 @@ WSGI_APPLICATION = 'smart_home_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# Helper function to read environment variables
+from smart_home_project.utilities import get_env_variable
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_DATABSASE1', default='smart_home_hub'),
-        'USER': config('DB_APP_USER').lower(),
-        'PASSWORD': config('DB_APP_USER_PASSWORD'),
-        'HOST': config('DB_SERVER',default='localhost'),  # Set to empty string for localhost.
-        'PORT': '',           # Set to empty string for default.
+        'NAME': get_env_variable('DB_DATABSASE1', default='smart_home_hub', required=True),
+        'USER': get_env_variable('DB_APP_USER', required=True).lower(),
+        'PASSWORD': get_env_variable('DB_APP_USER_PASSWORD', required=True),
+        'HOST': get_env_variable('DB_SERVER', default='localhost'),
+        'PORT': get_env_variable('DB_PORT', default='5432'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_DATABSASE1', default='smart_home_hub'),
+#         'USER': config('DB_APP_USER').lower(),
+#         'PASSWORD': config('DB_APP_USER_PASSWORD'),
+#         'HOST': config('DB_SERVER',default='localhost'),  # Set to empty string for localhost.
+#         'PORT': '',           # Set to empty string for default.
+#     }
+# }
 
 # DATABASES = {
 #     'default': {
@@ -178,6 +193,37 @@ DATABASES = {
 #     }
 # }
 
+
+# use Redis as a cache backend
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379/1',
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
+else:
+    CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.environ.get('REDIS_URL'),  # Heroku provides this
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+# Celery Configuration Options
+CELERY_TIMEZONE = "America/Austin"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+if DEBUG:
+    CELERY_BROKER_URL = 'redis://redis:6379/0'
+else:
+    CELERY_BROKER_URL = config('REDIS_URL')
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -203,7 +249,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'America/Chicago'
 
 USE_I18N = True
 

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
-# Create your models here.
+from django.db.models import Q, JSONField
 
 LIGHT_STATUSES=[
     ('On','Light is On'),
@@ -78,9 +78,6 @@ class Group(models.Model):
 
 ## 2024-01-21 using Hue CLI API V2 and PostgreSQL database to store the data. here are the new data models:
 
-from django.contrib.postgres.fields import JSONField
-
-
 # In this model:
 # Fields that are less likely to change and are essential for identifying the light (like 'id' and 'owner') are stored as regular Django model fields.
 # The JSONField is used for 'metadata', 'product_data', and 'state'. These fields can accommodate nested JSON objects.
@@ -97,3 +94,8 @@ class HueLight(models.Model):
     
     def __str__(self):
         return self.metadata.get('name', 'Unknown Light')
+    class Meta:
+        db_table = "HueLight"
+        ordering = ["id_v1"]
+        verbose_name_plural = "HueLights"
+        

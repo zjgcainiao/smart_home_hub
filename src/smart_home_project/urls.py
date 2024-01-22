@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 
 
 # from timeclock.views import ActivityView
-
+app_name = 'smart_home_project'
 
 urlpatterns = [
     # url(r'^$',ActivityView.as_view()),

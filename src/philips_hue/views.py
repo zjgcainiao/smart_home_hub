@@ -16,26 +16,21 @@ import logging
 from dotenv import load_dotenv
 import json  # Import the json module
 import requests
-from philips_hue.utilities import get_attributes,get_hue_connection,sync_lights_with_db,get_bridges, sync_groups_with_db
-
-# light_name_list=[]
-# light_id_list=[]
-# light_on_list=[] # Boolean
-# light_bri_list=[]
-# for _ in b.lights:
-#     light_name_list.append(_.name)
-#     light_id_list.append(_.light_id)
-#     light_on_list.append(_.on)
-#     light_bri_list.append(_.brightness/254 if _.on else 0)
+from philips_hue.utilities import get_attributes,get_hue_connection,sync_lights_with_db, sync_groups_with_db, update_or_create_bridge_in_system
 
 
 def index(request):
-    bridges = get_bridges()
-    print(f'bridges are {bridges}')
-    if bridges:
-        bridge = bridges[0]
-    else:
-        bridge = None
+    # bridges = get_bridges()
+    # print(f'bridges are {bridges}')
+    # if bridges:
+    #     bridge = bridges[0]
+    # else:
+    #     bridge = None
+    # bridge = get_bridge_info_from_mdns()
+    bridges = update_or_create_bridge_in_system()
+    bridge = bridges[0]
+    # if bridge:
+    #     bridge = MonitorBridge.objects.filter( bridge_unique_id=bridge['id'])
     print(f'bridge is {bridge}')
     # bridge = MonitorBridge.objects.order_by('id').first()  # Get the first bridge if exists
 
@@ -46,9 +41,6 @@ def index(request):
     else:
         context = {'bridge': bridge}
     return render(request, 'philips_hue/index.html', context)
-  
-
-
 
 def get_light_list(request):
     # Sync Hue lights with the MonitorLights model

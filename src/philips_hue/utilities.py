@@ -8,9 +8,10 @@ from dotenv import load_dotenv
 from django.db import transaction
 from philips_hue.models import MonitorBridge, MonitorLights, Group
 from django.utils import timezone
-import pytz
+from django.utils import timezone
 import socket
-
+from zeroconf import ServiceBrowser, Zeroconf
+from philips_hue.zeroconf_listener import HueListener
 
 def get_attributes(object):
     regular_methods = {}
@@ -33,11 +34,23 @@ def get_attributes(object):
     return all_attributes  # for Python dictionary
     # return json.dumps(all_attributes, indent=4)  # for JSON string with pretty formatting
 
+import time
 
-# # Convert the dictionary to a JSON string
-# group_attributes_json = json.dumps(group_attributes, indent=4)
-# print(group_attributes_json)
+def get_bridge_info_from_mdns():
+    timeout = 10 # seconds
+    zeroconf = Zeroconf()
+    listener = HueListener()
+    browser = ServiceBrowser(zeroconf, "_hue._tcp.local.", listener)
 
+    start_time = time.time()
+    while True:
+        elapsed_time = time.time() - start_time
+        if listener.device_info or elapsed_time > timeout:
+            break
+        time.sleep(0.1)  # Sleep for a short time to prevent a busy-wait loop
+
+    zeroconf.close()
+    return listener.device_info
 # the service_info (input) is a ServiceInfo object from the zeroconf library
 
 def parse_bridge_info_in_mdns(service_info):
@@ -79,48 +92,53 @@ def parse_bridge_info_in_mdns(service_info):
 
 
 # in most case, there is only one bridge in the system.
-def get_bridges():
+def update_or_create_bridge_in_system():
                    
     monitor_bridges = []  # List to store MonitorBridge instances
-    try:
-        discover = Discover()
-        raw_bridges = discover.find_hue_bridge_mdns(timeout=10)
-        raw_bridges=json.loads(raw_bridges)
-        # If local discovery fails, fetch bridge info from the Philips Hue discovery API
-        if not raw_bridges:
-            response = requests.get("https://discovery.meethue.com")
-            if response.status_code == 200:
-                raw_bridges = response.json()
-            else:
-                # https://discovery.meethue.com/ is the equivalent of the following code
-                logging.error(f"Failed to fetch data from https://discovery.meethue.com. Status code: {response.status_code}")
-                return None
-                # update or create MonitorBridge instance
-        with transaction.atomic():
-                # Iterate through the discovered bridges
-                for bridge_info in raw_bridges:
-                    # Use update_or_create to update an existing instance or create a new one
-                    monitor_bridge, created = MonitorBridge.objects.update_or_create(
-                        bridge_unique_id=bridge_info["id"],
-                        defaults={
-                            'bridge_name': bridge_info["name"],
-                            'bridge_ip_address': bridge_info["internalipaddress"],
-                            'bridge_localtime': timezone.now(),  # Set current time for bridge_localtime
-                            'bridge_timezone': pytz.timezone(pytz.country_timezones['US'][0])  # Fetch the system's timezone dynamically
-                        }
-                    )
-                    # Add the MonitorBridge instance to the list
-                    monitor_bridges.append(monitor_bridge)
-                    # The 'created' variable is a boolean that is True if a new instance was created
-                    if created:
-                        print(f"Created new MonitorBridge: {monitor_bridge.bridge_name}")
-                    else:
-                        print(f"Updated existing MonitorBridge: {monitor_bridge.bridge_name}")
-        
-        return monitor_bridges
-    except Exception as e:
-        logging.error(f"An error occurred while syncing lights with the database: {str(e)}")
-        return []
+
+    # try:
+    #     discover = Discover()
+    #     raw_bridges = discover.find_hue_bridge_mdns(timeout=10)
+    #     raw_bridges=json.loads(raw_bridges)
+    #     # If local discovery fails, fetch bridge info from the Philips Hue discovery API
+    #     if not raw_bridges:
+    #         response = requests.get("https://discovery.meethue.com")
+    #         if response.status_code == 200:
+    #             raw_bridges = response.json()
+    #         else:
+    #             # https://discovery.meethue.com/ is the equivalent of the following code
+    #             logging.error(f"Failed to fetch data from https://discovery.meethue.com. Status code: {response.status_code}")
+    #             return None
+    #             # update or create MonitorBridge instance
+
+
+    raw_bridges = [get_bridge_info_from_mdns()]
+
+    with transaction.atomic():
+            # Iterate through the discovered bridges
+            for bridge_info in raw_bridges:
+                # Use update_or_create to update an existing instance or create a new one
+                monitor_bridge, created = MonitorBridge.objects.update_or_create(
+                    bridge_unique_id=bridge_info["id"],
+                    defaults={
+                        'bridge_name': bridge_info["name"],
+                        'bridge_ip_address': bridge_info["internalipaddress"],
+                        'bridge_localtime': timezone.now(),  # Set current time for bridge_localtime
+                        'bridge_timezone': timezone.get_current_timezone()  # Fetch the system's timezone dynamically
+                    }
+                )
+                # Add the MonitorBridge instance to the list
+                monitor_bridges.append(monitor_bridge)
+                # The 'created' variable is a boolean that is True if a new instance was created
+                if created:
+                    print(f"Created new MonitorBridge: {monitor_bridge.bridge_name}")
+                else:
+                    print(f"Updated existing MonitorBridge: {monitor_bridge.bridge_name}")
+    
+    return monitor_bridges
+    # except Exception as e:
+    #     logging.error(f"An error occurred while syncing lights with the database: {str(e)}")
+    #     return []
 
 def get_hue_connection():
     """
