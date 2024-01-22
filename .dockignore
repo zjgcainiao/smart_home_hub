@@ -1,0 +1,67 @@
+# Ignore Git and other VCS files
+.git
+.gitignore
+.svn
+.hg
+.hgignore
+.hgcheck
+.cvsignore
+
+# Ignore IDE/Editor folders
+.idea
+.vscode
+*.swp
+*.swo
+*.swn
+*.bak
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore Python virtual environment
+venv
+*.venv
+*.venv/
+venv/
+ENV/
+hub_env/
+
+# Ignore node modules
+node_modules/
+
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST

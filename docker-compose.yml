@@ -1,0 +1,47 @@
+version: "3.11"
+
+services:
+  web:
+    build:
+      context: . # This points to the root_project_folder
+      dockerfile: ./web/Dockerfile # Path to the Dockerfile from the context
+    command: gunicorn smart_home_project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./src:/code # Mounts the src directory to /code in the container
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env # Use environment variables defined in .env
+    depends_on:
+      - redis
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./celery_worker/Dockerfile
+    command: celery -A smart_home_project worker --loglevel=info
+    env_file:
+      - .env # Use environment variables defined in .env
+    volumes:
+      - ./src:/code # Mounts the src directory to /code in the container
+    depends_on:
+      - web
+      - redis
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: ./celery_beat/Dockerfile
+    command: celery -A smart_home_project beat --loglevel=info
+    volumes:
+      - ./src:/code # Mounts the src directory to /code in the container
+    env_file:
+      - .env # Use environment variables defined in .env
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379" # Expose Redis on port 6379

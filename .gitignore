@@ -32,3 +32,5 @@ myenv/
 # MacOS files
 DS_STORE
 
+all_resource_v2.json
+sample_v2_lights.json
