@@ -112,7 +112,7 @@ class HueDevice(models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(null=True, blank=True)
     id_v1 = models.CharField(max_length=255, blank=True, null=True)
-    product_data = JSONField(blank=True, null=True)  # Stores the product data
+    product_data = JSONField(blank=True, null=True)  # Stores the product data. model_id": "LCT024","manufacturer_name": "Signify Netherlands B.V.","product_name": "Hue play", "product_archetype": "hue_play", "certified": true,"software_version": "1.108.5", "hardware_platform_type": "100b-10e"
     metadata = JSONField(blank=True, null=True)  # Stores the metadata
     identify = JSONField(blank=True, null=True)  # Stores the identify data
     services = JSONField(blank=True, null=True)  # Stores the list of services

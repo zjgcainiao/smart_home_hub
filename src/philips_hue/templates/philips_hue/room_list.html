@@ -34,40 +34,42 @@
     }
 </style>
 <div class="container p-2 m-2">
-    <div class="card card-hover">
-        <h2> Rooms </h2>
-    </div>
+    <div class="card card-hover ">
+        <h2 class="card-header"> Rooms </h2>
 
+        {% if rooms %}
+        <div class="card-body p-2 m-2">
+            <p class="lead">Here are the rooms in my home </p>
+            <div class="p-2 m-2">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <th scope="col">Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">UUID </th>
+                        <th scope="col">Devices Included</th>
+                        <th scope="col">Services</th>
+                        <th scope="col">ULR_V1</th>
 
-    {% if rooms %}
-    <div class="card-body p-2 m-2">
-        <p class="lead">Here are the rooms in my home </p>
-        <div class="p-2 m-2">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">UUID </th>
-                    <th scope="col">Devices Included</th>
-                    <th scope="col">Services</th>
-                    <th scope="col"></th>
-                    <th scope="col">Saturation</th>
-                <tbody>
-                    {% for room in rooms %}
-                    <tr>
-                        <td><a href="{% url 'philips_hue:room_detail' pk=room.pk %}">{{ room.metadata.name }}</a></td>
-                        <td>{{ room.metadata.archetype }}</td>
-                        <td>{{ room.uuid }}</td>
-                        <td> {% for child in room.children %}
-                            {{ room. }}</td>
-                        <td>{{ room. }}</td>
-                        <td>{{ room.saturation }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    <tbody>
+                        {% for room in rooms %}
+                        <tr>
+                            <td><a href="{% url 'philips_hue:room_detail' pk=room.pk %}">{{ room.metadata.name }}</a>
+                            </td>
+                            <td>{{ room.metadata.archetype }}</td>
+                            <td>{{ room.uuid }}</td>
+                            <td> {% for child in room.children %}
+                                <p>{{child.rtype}}:{{ child.rid }}</p>
+                                {% endfor %}
+                            </td>
+                            <td>{{ room.services }}</td>
+                            <td>{{ room.id_v1 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- end of table -->
         </div>
-        <!-- end of table -->
     </div>
 </div>
 <!-- end of container -->

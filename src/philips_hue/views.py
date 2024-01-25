@@ -19,6 +19,7 @@ import requests
 from philips_hue.utilities import get_attributes, update_or_create_bridge_in_system
 from philips_hue.tasks import fetch_resource_endpoint_task, save_lights_task, save_rooms_task,save_devices_task
 
+logger = logging.getLogger('django.db')
 
 
 def index(request):
@@ -107,6 +108,21 @@ def get_device_list(request):
     return render(request, 'philips_hue/device_list.html', context)
 
 
-def get_device_detail(request, pk):
-    device = get_object_or_404(HueDevice, pk=pk)
+# def get_device_detail(request, pk):
+#     device = get_object_or_404(HueDevice, pk=pk)
+#     return render(request, 'philips_hue/device_detail.html', {'device': device})
+
+def get_device_detail(request, identifier):
+    try:
+        device = HueDevice.objects.get(pk=identifier)
+    except HueDevice.DoesNotExist:
+        try:
+            device = HueDevice.objects.get(uuid=identifier)
+        except HueDevice.DoesNotExist:
+            logger.error(f"Device with id or uuid '{identifier}' not found.")
+            raise Http404("Device not found")
+        except ValueError as e:
+            logger.error(f"Invalid uuid format: {e}")
+            raise Http404("Invalid identifier")
+    
     return render(request, 'philips_hue/device_detail.html', {'device': device})
