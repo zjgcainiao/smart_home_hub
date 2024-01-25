@@ -34,32 +34,34 @@
     }
 </style>
 <div class="container p-2 m-2">
-    <div class="Card card-hover">
-        <h2> Groups </h2>
+    <div class="card card-hover">
+        <h2> Rooms </h2>
     </div>
 
 
-    {% if groups %}
+    {% if rooms %}
     <div class="card-body p-2 m-2">
-        <p class="lead">Here are the groups in my home </p>
+        <p class="lead">Here are the rooms in my home </p>
         <div class="p-2 m-2">
             <table class="table table-striped table-bordered">
                 <thead>
                     <th scope="col">Name</th>
-                    <th scope="col">Hue Group ID</th>
-                    <th scope="col">Is On</th>
-                    <th scope="col">Brightness</th>
-                    <th scope="col">Hue</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">UUID </th>
+                    <th scope="col">Devices Included</th>
+                    <th scope="col">Services</th>
+                    <th scope="col"></th>
                     <th scope="col">Saturation</th>
                 <tbody>
-                    {% for group in groups %}
+                    {% for room in rooms %}
                     <tr>
-                        <td><a href="{% url 'philips_hue:group_detail' pk=group.pk %}">{{ group.name }}</a></td>
-                        <td>{{ group.group_id }}</td>
-                        <td>{{ group.is_on }}</td>
-                        <td>{{ group.brightness }}</td>
-                        <td>{{ group.hue }}</td>
-                        <td>{{ group.saturation }}</td>
+                        <td><a href="{% url 'philips_hue:room_detail' pk=room.pk %}">{{ room.metadata.name }}</a></td>
+                        <td>{{ room.metadata.archetype }}</td>
+                        <td>{{ room.uuid }}</td>
+                        <td> {% for child in room.children %}
+                            {{ room. }}</td>
+                        <td>{{ room. }}</td>
+                        <td>{{ room.saturation }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -70,7 +72,7 @@
 </div>
 <!-- end of container -->
 {% else %}
-<p>No groups found.</p>
+<p>No rooms found.</p>
 {% endif %}
 
 <!-- </div> -->

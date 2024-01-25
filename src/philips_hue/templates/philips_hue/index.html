@@ -45,10 +45,9 @@
         <!-- end of card-body  -->
         <div class="card-body pt-2 mt-2">
             <h3 class="card-title p-1 m-1">Access Resources</h3>
-            <div class="btn-group justify-spacing-between" role="group" aria-label="Access Resources">
+            <div class="btn-group justify-spacing-between p-2 mt-2" role="group" aria-label="Access Resources">
                 <a href="{% url 'philips_hue:light_list' %}" class="btn btn-primary btn-resource">Lights</a>
-                <a href="{% url 'philips_hue:group_list' %}" class="btn btn-primary btn-resource">Groups</a>
-                <button type="button" class="btn btn-secondary btn-resource">Groups</button>
+                <a href="{% url 'philips_hue:room_list' %}" class="btn btn-primary btn-resource">Rooms</a>
                 <button type="button" class="btn btn-secondary btn-resource">Scenes</button>
                 <button type="button" class="btn btn-secondary btn-resource">Schedules</button>
                 <button type="button" class="btn btn-secondary btn-resource">Rules</button>

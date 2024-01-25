@@ -34,3 +34,6 @@ DS_STORE
 
 all_resource_v2.json
 sample_v2_lights.json
+sample_v2_devices.json
+sample_v2_rooms.json
+sample*.json

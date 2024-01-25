@@ -87,10 +87,8 @@ class HueLight(models.Model):
 
     id = models.AutoField(primary_key=True)  # This represents the unique ID of the light in the database, not the Hue light ID
     uuid = models.UUIDField(null=True, blank=True)
-    id_v1 = models.CharField(max_length=255, unique=True)
+    id_v1 = models.CharField(max_length=255)
     owner = JSONField(blank=True, null=True)
-    owner_rid = models.CharField(max_length=255)
-    owner_rtype = models.CharField(max_length=255)
     metadata = JSONField(blank=True, null=True)  # Stores 'name', 'archetype', 'function'
     product_data = JSONField(blank=True, null=True)  # Stores product-specific data, {"function": "functional"}
     state = JSONField(blank=True, null=True)  # Stores 'on', 'dimming:{"brightness":100, "min_dim_level": 0.10000000149011612}, 'color_temperature', "diming_delta", "color_temperature_delta",'dynamics'
@@ -111,7 +109,8 @@ class HueLight(models.Model):
     
 
 class HueDevice(models.Model):
-    id = models.CharField(max_length=255, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    uuid = models.UUIDField(null=True, blank=True)
     id_v1 = models.CharField(max_length=255, blank=True, null=True)
     product_data = JSONField(blank=True, null=True)  # Stores the product data
     metadata = JSONField(blank=True, null=True)  # Stores the metadata
@@ -120,7 +119,10 @@ class HueDevice(models.Model):
     type = models.CharField(max_length=100)  # e.g., "device"
 
     class Meta:
-        db_table = 'hue_device'
+        db_table = "HueDevice"
+        ordering = ["id_v1"]
+        verbose_name_plural = "HueDevices"
+
 
 class HueRoom(models.Model):
     id = models.AutoField(primary_key=True)
@@ -130,6 +132,12 @@ class HueRoom(models.Model):
     services = JSONField(blank=True, null=True)  # Stores the list of services
     metadata = JSONField(blank=True, null=True)  # Includes name, archetype
     type = models.CharField(max_length=100,blank=True, null=True)  # e.g., "room"
+
+    def __str__(self) -> str:
+        name = self.metadata.get('name', 'Unknown Room')
+        uuid = self.uuid
+        id_v1 = self.id_v1
+        return f'{name}_uuid_{uuid} ({id_v1})'
 
     class Meta:
         db_table = 'HueRoom'

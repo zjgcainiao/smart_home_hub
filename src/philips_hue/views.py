@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.http import Http404
 from .models import MonitorLights
 from decouple import config, Csv
-from philips_hue.models import MonitorBridge, MonitorLights, Group, HueLight
+from philips_hue.models import MonitorBridge, MonitorLights, Group, HueLight, HueRoom, HueDevice
 from django.utils import timezone
 from django.db import transaction
 import os
@@ -17,7 +17,8 @@ from dotenv import load_dotenv
 import json  # Import the json module
 import requests
 from philips_hue.utilities import get_attributes, update_or_create_bridge_in_system
-from philips_hue.tasks import fetch_hue_resources_task, fetch_hue_lights_task
+from philips_hue.tasks import fetch_resource_endpoint_task, save_lights_task, save_rooms_task,save_devices_task
+
 
 
 def index(request):
@@ -49,7 +50,8 @@ def get_light_list(request):
     # use the sync_lights_with_db function to sync the lights with the database and return the list of lights
     # this sync function should be improved to only update the lights that have changed by filtering 
     # the lights that have changed by comparing the light_id and the on status
-    lights = fetch_hue_lights_task()['data']
+    save_lights_task()
+    lights = HueLight.objects.all()
     # Create context to pass to the template
     if not lights:
         context = {'error': 'Unable to retrieve light list.'}
@@ -58,11 +60,12 @@ def get_light_list(request):
 
 
 def get_light_detail(request, pk):
-    light = get_object_or_404(MonitorLights, pk=pk)
+    light = get_object_or_404(HueLight, pk=pk)
     return render(request, 'philips_hue/light_detail.html', {'light': light})
 
+
 def update_light(request,pk):
-    lights = MonitorLights.objects.get(pk=pk)
+    lights = HueLight.objects.get(pk=pk)
     logging.warning("I am calling the update_lights function in the view. lights_group is {}".format(lights))
     try:
         for light in lights:
@@ -79,16 +82,31 @@ def update_light(request,pk):
         raise Http404("There is no light info available.")
     return redirect('index', context)
 
-def get_group_list(request):
-
-    groups = sync_groups_with_db()
+def get_room_list(request):
+    save_rooms_task()
+    rooms =  HueRoom.objects.all()
     # Create context to pass to the template
-    if not groups:
-        context = {'error': 'Unable to retrieve groups information in this hue.'}
-    context = {'groups': groups}
-    return render(request, 'philips_hue/group_list.html', context)
+    if not rooms:
+        context = {'error': 'Unable to retrieve room information in this hue.'}
+    context = {'rooms': rooms}
+    return render(request, 'philips_hue/room_list.html', context)
 
 
-def get_group_detail(request, pk):
-    group = get_object_or_404(Group, pk=pk)
-    return render(request, 'philips_hue/group_detail.html', {'group': group})
+def get_room_detail(request, pk):
+    room = get_object_or_404(HueRoom, pk=pk)
+    return render(request, 'philips_hue/room_detail.html', {'room': room})
+
+
+def get_device_list(request):
+    save_devices_task()
+    devices = HueDevice.objects.all()
+    # Create context to pass to the template
+    if not devices:
+        context = {'error': 'Unable to retrieve room information in this hue.'}
+    context = {'devices': devices}
+    return render(request, 'philips_hue/device_list.html', context)
+
+
+def get_device_detail(request, pk):
+    device = get_object_or_404(HueDevice, pk=pk)
+    return render(request, 'philips_hue/device_detail.html', {'device': device})
