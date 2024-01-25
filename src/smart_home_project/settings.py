@@ -225,6 +225,22 @@ if DEBUG:
 else:
     CELERY_BROKER_URL = config('REDIS_URL')
 
+from celery.schedules import crontab
+from django.conf import settings
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler' # user Django ORM to store the schedule in the database
+# file period_crontab_tasks.py in the philips_hue app
+
+# CELERY_BEAT_SCHEDULE = {
+#     'run-save_lights_every-day': {
+#         'task': 'phillips.tasks.save_lights_task',
+#         'schedule': crontab(hour=7, minute=0),
+#         # 'args': (arg1, arg2),  # You can provide additional args if needed
+#     },
+# }
+
+# CELERY_BEAT_SCHEDULE_FILENAME = 'celerybeat-schedule'
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 

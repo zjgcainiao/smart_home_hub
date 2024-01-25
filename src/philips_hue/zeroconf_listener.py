@@ -36,6 +36,19 @@ class HueListener:
             print(f"Service {name} added, service info: {info}")
             # Parse service info and store in device_info
             self.device_info = self.parse_bridge_info(info)
+    
+    def update_service(self, zeroconf, type, name, service_info):
+        # This method is called when a service has been updated.
+        # You can implement update logic here if you need to handle updates.
+        # If you don't need to handle updates, you can leave this method empty.
+        
+        print(f"Service {name} updated, service info: {service_info}")
+        # Update device_info with the new service_info
+        if name in self.device_info:
+            updated_info = self.parse_bridge_info(service_info)
+            self.device_info[name] = updated_info
+        else:
+            print(f"Service {name} was not previously added.")
 
     def parse_bridge_info(self, service_info):
         # Extracting the IP address
@@ -61,5 +74,5 @@ class HueListener:
             'id': bridge_id,
             'name': name,
             'port': port,
-            'model_id': model_id
+            'model_id': model_id,
         }

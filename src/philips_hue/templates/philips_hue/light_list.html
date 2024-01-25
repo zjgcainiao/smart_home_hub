@@ -17,23 +17,25 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <th>Name</th>
+                    <th>Type</th>
                     <th>ID</th>
                     <th>Is On</th>
                     <th>Brightness</th>
-                    <th>Hue</th>
+                    <th>Special Effects On?</th>
                     <th>Saturation</th>
                     <th>Action</th>
                 <tbody>
                     {% for light in lights %}
                     <tr>
                         <td>
-                            <a href="{% url 'philips_hue:light_detail' pk=light.pk %}">{{ light.light_name }}</a>
+                            <a href="{% url 'philips_hue:light_detail' pk=light.pk %}">{{ light.meta.name }}</a>
                         </td>
-                        <td>{{ light.light_hue_id }}</td>
-                        <td>{{ light.light_is_on }}</td>
-                        <td>{{ light.light_bri }}</td>
-                        <td>{{ light.light_hue }}</td>
-                        <td>{{ light.light_sat }}</td>
+                        <td>{{ light.uuid }}</td>
+                        <td>{{ light.meta.archetype }}</td>
+                        <td>{{ light.state.on }}</td>
+                        <td>{{ light.state.dimming.brightness }}</td>
+                        <td>{{ light.state.effects.status }}</td>
+                        <td>{{ light.state.color }}</td>
                         <td><a class="btn btn-primary btn-sm"
                                 href="{% url 'philips_hue:light_detail' pk=light.pk %}">Detail</a>
 

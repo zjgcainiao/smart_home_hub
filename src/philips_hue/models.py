@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.db.models import Q, JSONField
 
 LIGHT_STATUSES=[
@@ -23,10 +23,12 @@ class MonitorBridge(models.Model):
     bridge_unique_id=models.CharField(max_length=120,null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At", null=True)  # Maps to 'created_at'
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated At", null=True)  # Maps to 'updated_at'
+    
     def __str__(self):
         return f"{self.bridge_name}_{self.bridge_ip_address}"
     class Meta:
         db_table = "MonitorBridge"
+        ordering = ["-id"]
         verbose_name_plural="MonitorBridges"
 
 
@@ -83,19 +85,53 @@ class Group(models.Model):
 # The JSONField is used for 'metadata', 'product_data', and 'state'. These fields can accommodate nested JSON objects.
 class HueLight(models.Model):
 
-    id = models.CharField(max_length=255, primary_key=True)
+    id = models.AutoField(primary_key=True)  # This represents the unique ID of the light in the database, not the Hue light ID
+    uuid = models.UUIDField(null=True, blank=True)
     id_v1 = models.CharField(max_length=255, unique=True)
+    owner = JSONField(blank=True, null=True)
     owner_rid = models.CharField(max_length=255)
     owner_rtype = models.CharField(max_length=255)
-    metadata = JSONField()  # Stores 'name', 'archetype', 'function'
-    product_data = JSONField()  # Stores product-specific data
-    state = JSONField()  # Stores 'on', 'dimming', 'color_temperature', etc.
-    type = models.CharField(max_length=255)
-    
+    metadata = JSONField(blank=True, null=True)  # Stores 'name', 'archetype', 'function'
+    product_data = JSONField(blank=True, null=True)  # Stores product-specific data, {"function": "functional"}
+    state = JSONField(blank=True, null=True)  # Stores 'on', 'dimming:{"brightness":100, "min_dim_level": 0.10000000149011612}, 'color_temperature', "diming_delta", "color_temperature_delta",'dynamics'
+    type = models.CharField(max_length=255, blank=True, null=True)
+    identify = models.JSONField(null=True, blank=True)
+    alert = models.JSONField(null=True, blank=True)
+    powerup = models.JSONField(null=True, blank=True)
+    signaling = models.JSONField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At", null=True)  # Maps to 'created_at'
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated At", null=True)  # Maps to 'updated_at'
+
     def __str__(self):
         return self.metadata.get('name', 'Unknown Light')
     class Meta:
         db_table = "HueLight"
         ordering = ["id_v1"]
         verbose_name_plural = "HueLights"
-        
+    
+
+class HueDevice(models.Model):
+    id = models.CharField(max_length=255, primary_key=True)
+    id_v1 = models.CharField(max_length=255, blank=True, null=True)
+    product_data = JSONField(blank=True, null=True)  # Stores the product data
+    metadata = JSONField(blank=True, null=True)  # Stores the metadata
+    identify = JSONField(blank=True, null=True)  # Stores the identify data
+    services = JSONField(blank=True, null=True)  # Stores the list of services
+    type = models.CharField(max_length=100)  # e.g., "device"
+
+    class Meta:
+        db_table = 'hue_device'
+
+class HueRoom(models.Model):
+    id = models.AutoField(primary_key=True)
+    uuid = models.UUIDField(null=True, blank=True)
+    id_v1 = models.CharField(max_length=255, unique=True,verbose_name="Hue Room ID (v1)")
+    children = JSONField(blank=True, null=True)  # Stores the list of children devices
+    services = JSONField(blank=True, null=True)  # Stores the list of services
+    metadata = JSONField(blank=True, null=True)  # Includes name, archetype
+    type = models.CharField(max_length=100,blank=True, null=True)  # e.g., "room"
+
+    class Meta:
+        db_table = 'HueRoom'
+        ordering = ["id_v1"]
+        verbose_name_plural = "HueRooms"

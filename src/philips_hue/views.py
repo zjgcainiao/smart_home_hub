@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.http import Http404
 from .models import MonitorLights
 from decouple import config, Csv
-from philips_hue.models import MonitorBridge, MonitorLights, Group
+from philips_hue.models import MonitorBridge, MonitorLights, Group, HueLight
 from django.utils import timezone
 from django.db import transaction
 import os
@@ -16,7 +16,8 @@ import logging
 from dotenv import load_dotenv
 import json  # Import the json module
 import requests
-from philips_hue.utilities import get_attributes,get_hue_connection,sync_lights_with_db, sync_groups_with_db, update_or_create_bridge_in_system
+from philips_hue.utilities import get_attributes, update_or_create_bridge_in_system
+from philips_hue.tasks import fetch_hue_resources_task, fetch_hue_lights_task
 
 
 def index(request):
@@ -48,7 +49,7 @@ def get_light_list(request):
     # use the sync_lights_with_db function to sync the lights with the database and return the list of lights
     # this sync function should be improved to only update the lights that have changed by filtering 
     # the lights that have changed by comparing the light_id and the on status
-    lights = sync_lights_with_db()
+    lights = fetch_hue_lights_task()['data']
     # Create context to pass to the template
     if not lights:
         context = {'error': 'Unable to retrieve light list.'}
