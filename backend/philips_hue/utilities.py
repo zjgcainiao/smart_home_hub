@@ -2,7 +2,7 @@
 import json
 import requests
 from huesdk import Discover, Hue
-from decouple import config, Csv
+# from decouple import config, Csv
 import logging
 from dotenv import load_dotenv
 from django.db import transaction
@@ -12,7 +12,7 @@ from django.utils import timezone
 import socket
 from zeroconf import ServiceBrowser, Zeroconf
 from philips_hue.zeroconf_listener import HueListener
-
+from django.conf import settings
 
 logger = logging.getLogger('django')
 
@@ -112,58 +112,28 @@ def update_or_create_bridge_in_system():
 def fetch_hue_resources_manually():
     try:
         ip_address = get_bridge_info_from_mdns()['internalipaddress']
-        hue_bridge_username = config('HUE_BRIDGE_USERNAME') 
-    except Exception as e:
-        logger.error(f"An error occurred while fetching the bridge ip address {ip_address} and the bridge username: {str(e)}")
+        try:
+            hue_bridge_username = settings.HUE_BRIDGE_USERNAME2
+        except AttributeError:
+            logger.info("HUE_BRIDGE_USERNAME not found, trying HUE_BRIDGE_USERNAME2")
+            hue_bridge_username = settings.HUE_BRIDGE_USERNAME
 
         url = f"https://{ip_address}/clip/v2/resource"
         headers = {'hue-application-key': hue_bridge_username}
-        response = requests.get(url, headers=headers, verify=False)
-        if response.status_code == 200:
+
+        try:
+            response = requests.get(url, headers=headers, verify=False)
+            response.raise_for_status()  # Will raise an HTTPError if the HTTP request returned an unsuccessful status code
+
             return response.json()
-        else:
-            # https://discovery.meethue.com/ is the equivalent of the following code
-            logger.error(f"Failed to fetch data from the Hue API V2 url {url}. Status code: {response.status_code}")
-            return None
+        except requests.exceptions.HTTPError as http_err:
+            logger.error(f"HTTP error occurred: {http_err} - Status code: {response.status_code}")
+        except requests.exceptions.RequestException as req_err:
+            logger.error(f"Error during requests to {url}: {req_err}")
 
-# def sync_lights_with_db():
-#     """
-#     Syncs the lights from the Hue bridge with the MonitorLights model in the database.
-
-#     Returns:
-#         A list of MonitorLights objects representing the synced lights.
-#     """
-#     try:
-#         # Establish a connection to the Hue bridge
-#         hue = get_hue_connection()
-#         if not hue:
-#             logging.error("Unable to establish a connection to the Hue bridge.")
-#             return []
-
-#         # Fetch lights from the Hue bridge
-#         hue_lights = hue.get_lights()  # Adjust based on your Hue SDK or API
-
-#         # Sync Hue lights with the MonitorLights model
-#         monitor_lights = []
-#         for hue_light in hue_lights:
-#             monitor_light, created = MonitorLights.objects.update_or_create(
-#                 light_hue_id=hue_light.id_,  # Assuming hue_light has an attribute 'id_'
-#                 defaults={
-#                     'light_name': hue_light.name,
-#                     'light_is_on': hue_light.is_on,
-#                     'light_bri': hue_light.bri,
-#                     'light_hue': hue_light.hue,
-#                     'light_sat': hue_light.sat,
-#                 }
-#             )
-#             monitor_lights.append(monitor_light)
-        
-#         return monitor_lights
-
-#     except Exception as e:
-#         logging.error(f"An error occurred while syncing lights with the database: {str(e)}")
-#         return []
-    
+    except Exception as e:
+        logger.error(f"An error occurred while fetching the bridge IP address or username: {str(e)}")
+        return None
 
 
 

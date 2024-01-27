@@ -6,7 +6,7 @@ from decouple import config
 from philips_hue.utilities import get_bridge_info_from_mdns
 import logging
 from philips_hue.models import MonitorBridge, MonitorLights, Group, HueLight, HueRoom, HueDevice
-
+from django.conf import settings
 from celery.utils.log import get_task_logger
 from django.core.exceptions import ValidationError
 
@@ -40,7 +40,8 @@ def fetch_resource_endpoint_task(endpoint=''):
         return None
 
     ip_address = bridge_info['internalipaddress']
-    hue_bridge_username = config('HUE_BRIDGE_USERNAME')
+    hue_bridge_username = settings.HUE_BRIDGE_USERNAME2
+
     headers = {'hue-application-key': hue_bridge_username}
 
     # Construct the URL based on the endpoint

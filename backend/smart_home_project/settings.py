@@ -167,6 +167,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'smart_home_project.wsgi.application'
 
 
+
+# HUE BRIDGE USERNAME. This is the username that the app will use to connect to the Hue Bridge.
+from decouple import config
+
+try:
+    HUE_BRIDGE_USERNAME = config('HUE_BRIDGE_USERNAME')
+    HUE_BRIDGE_USERNAME2 = config('HUE_BRIDGE_USERNAME2')
+
+except KeyError as e:
+    # Handle the absence of both variables
+    # Log the error or raise an exception with detailed feedback
+    raise KeyError("Neither 'HUE_BRIDGE_USERNAME' nor 'HUE_BRIDGE_USERNAME2' found in environment variables. }")
+
+
 # CORS settings
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://localhost:3000']
 # CORS_ALLOWED_ORIGIN_REGEXES = [

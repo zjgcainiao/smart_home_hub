@@ -15,6 +15,6 @@ urlpatterns = [
     path('rooms/', views.get_room_list, name='room_list'),
     path('rooms/<pk>', views.get_room_detail, name='room_detail'),
     path('devices/', views.get_device_list, name='device_list'),
-    path('devices/<pk>', views.get_device_detail, name='device_detail'),
+    path('devices/<identifier>', views.get_device_detail, name='device_detail'),
 
 ]
