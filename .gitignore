@@ -9,6 +9,9 @@ logs/
 *.save
 .vscode
 
+
+
+
 # Byte-compiled / optimized / DLL files
 # src/philips_hue/__pycache__/
 __pycache__
@@ -37,3 +40,6 @@ sample_v2_lights.json
 sample_v2_devices.json
 sample_v2_rooms.json
 sample*.json
+
+
+

@@ -96,6 +96,11 @@ LOGGING = {
             'level': 'FATAL',
             'propagate': True,
         },
+        'django.networking': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'django.db.backends': {
             'handlers': ['file', 'console'],
             'level': 'DEBUG',
@@ -122,14 +127,17 @@ INSTALLED_APPS = [
     # 'timeclock',
     'gunicorn',
     'philips_hue',
+    'networking',
     # 'huesdk',
     'celery',
     'django_celery_beat',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -158,6 +166,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'smart_home_project.wsgi.application'
 
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://localhost:3000']
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^https://\w+\.ngrok\.io$",
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

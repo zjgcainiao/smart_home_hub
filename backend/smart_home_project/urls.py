@@ -28,7 +28,8 @@ app_name = 'smart_home_project'
 urlpatterns = [
     # url(r'^$',ActivityView.as_view()),
     path(r'admin/', admin.site.urls),
-    path('',include('philips_hue.urls'))
+    path('',include('philips_hue.urls')),
+    path('networking/',include('networking.urls')),
 ]
 
 if settings.DEBUG:

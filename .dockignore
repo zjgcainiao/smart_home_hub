@@ -65,3 +65,7 @@ var/
 .installed.cfg
 *.egg
 MANIFEST
+
+
+# testing in Vue project
+__tests__/
