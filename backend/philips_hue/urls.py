@@ -17,4 +17,5 @@ urlpatterns = [
     path('devices/', views.get_device_list, name='device_list'),
     path('devices/<identifier>', views.get_device_detail, name='device_detail'),
 
+    path('controls/<endpoint>/<identifier>', views.control_light_or_grouped_light, name='control_light'),
 ]

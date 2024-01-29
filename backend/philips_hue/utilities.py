@@ -6,13 +6,14 @@ from huesdk import Discover, Hue
 import logging
 from dotenv import load_dotenv
 from django.db import transaction
-from philips_hue.models import MonitorBridge, MonitorLights, Group
+from philips_hue.models import MonitorBridge, MonitorLights, Group, HueLight, HueRoom, HueDevice
 from django.utils import timezone
 from django.utils import timezone
 import socket
 from zeroconf import ServiceBrowser, Zeroconf
 from philips_hue.zeroconf_listener import HueListener
 from django.conf import settings
+from django.http import JsonResponse
 
 logger = logging.getLogger('django')
 
@@ -39,6 +40,37 @@ def get_attributes(object):
 
 import time
 
+
+def get_hue_bridges():
+    try:
+        response = requests.get('https://discovery.meethue.com/')
+        response.raise_for_status()  # Will raise an HTTPError for unsuccessful status codes
+        bridges = response.json()
+
+        # Transforming the response into a more convenient format if needed
+        transformed_bridges = []
+        for bridge in bridges:
+            transformed_bridges.append({
+                'id': bridge.get('id'),
+                'internal_ip_address': bridge.get('internalipaddress'),
+                'port': bridge.get('port', 443)  # Defaulting to 443 if not specified
+            })
+        return transformed_bridges
+    except requests.RequestException as e:
+        # You can handle the exception as needed, e.g., log it, return None, or re-raise it
+        logger.error(f"Error fetching Hue bridges: {e}")
+        return None
+
+def get_hue_username():
+    
+    # Example usage of the function
+    bridges = get_hue_bridges()
+    if bridges:
+        for bridge in bridges:
+            print(f"Bridge ID: {bridge['id']}, IP: {bridge['internal_ip_address']}, Port: {bridge['port']}")
+    else:
+        print("No bridges found or an error occurred.")
+
 # search mdns for the bridge info. usually there is only one bridge in the system.
 
 def get_bridge_info_from_mdns():
@@ -58,10 +90,62 @@ def get_bridge_info_from_mdns():
     return listener.device_info
 # the service_info (input) is a ServiceInfo object from the zeroconf library
 
+## 2024-01-28 reset the bridge and its reources (lights, rooms, scenes, devices, etc) when the bridge_unique_id is changed.
+def update_or_create_bridge_and_clear_if_new():
+    """
+    Updates or creates a bridge record and clears all existing records if a new bridge is detected.
+
+    This function retrieves information about bridges and checks if they are new or existing. If a new bridge is detected,
+    all existing records related to the bridges (HueLight, HueRoom, HueDevice, MonitorBridge) are cleared. Then, the bridge
+    record is updated or created in the MonitorBridge model.
+
+    Returns:
+        None
+    """
+    raw_bridges = [get_bridge_info_from_mdns()]
+    monitor_bridges = []  # List to store MonitorBridge instances
+    with transaction.atomic():
+        # Get current bridge unique IDs
+        existing_bridge_ids = set(MonitorBridge.objects.values_list('bridge_unique_id', flat=True))
+
+        # Iterate through the discovered bridges
+        for bridge_info in raw_bridges:
+            bridge_id = bridge_info["id"]
+
+            # Check if the bridge is new
+            if bridge_id not in existing_bridge_ids:
+                logger.warning("New bridge detected. All existing records will be cleared.")
+                
+                # Clear all records from related models
+                # Add a log entry or user warning before performing this action
+                HueLight.objects.all().delete()
+                HueRoom.objects.all().delete()
+                HueDevice.objects.all().delete()
+                MonitorBridge.objects.all().delete()
+
+                logger.warning("All existing records have been cleared.")
+
+            # Update or create the bridge record
+            monitor_bridge, created = MonitorBridge.objects.update_or_create(
+                bridge_unique_id=bridge_info["id"],
+                defaults={
+                    'bridge_name': bridge_info["name"],
+                    'bridge_ip_address': bridge_info["internalipaddress"],
+                    'bridge_localtime': timezone.now(),
+                    'bridge_timezone': timezone.get_current_timezone()
+                }
+            )
+            # Additional logic (if any) for the newly created or updated bridge
+            # ...
+
+    logger.info("Bridge update or creation process completed.")
+
+
 
 # update or create a bridge based on the unqiue id.
 def update_or_create_bridge_in_system():
-                   
+    
+    raw_bridges = [get_bridge_info_from_mdns()]
     monitor_bridges = []  # List to store MonitorBridge instances
 
     # try:

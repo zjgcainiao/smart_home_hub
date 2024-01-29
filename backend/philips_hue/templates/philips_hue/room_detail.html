@@ -1,49 +1,251 @@
 {% extends 'philips_hue/base.html' %}
 {% block content %}
+<script>
+    var endpoints = [];  // Initialize as empty arrays
+    var uuids = [];
+    var LightOns = [];
+    var brightness = [];
+    var lights = {{ grouped_lights | safe }};
+    console.log("here are the lights:", lights);
+
+    {% for light in grouped_lights %}
+    // Use 'push' to add elements to the arrays
+    endpoints.push("{{ light.rtype }}");
+    uuids.push("{{ light.rid }}");
+    LightOns.push("{{ light.on_status }}");
+    brightness.push({{ light.brightness }});
+    {% endfor %}
+
+    // Use the first element from each array
+    const endpoint = endpoints.length > 0 ? endpoints[0] : null;
+    const uuid = uuids.length > 0 ? uuids[0] : null;
+    var initial_light_on = LightOns.length > 0 && LightOns[0] === 'true';
+    var initial_brightness = brightness.length > 0 ? brightness[0] : 0;  // Default to 0 if no value
+    console.log(endpoint, uuid, initial_light_on, initial_brightness);
+
+    // URL for controlling the grouped_lights or lights
+    const ajax_url = `http://127.0.0.1:8000/controls/${endpoint}/${uuid}`;
+    console.log('the ajax_url is ', ajax_url)
+
+    $(function () {
+        // Set the initial value of the on/off switch
+        $('#light-switch').prop('checked', initial_light_on);
+
+        // Set the initial value of the brightness control
+        $('#brightness').val(initial_brightness);
+
+        // Event listener for form submission
+        $('#light-control-form').on('submit', function (e) {
+            e.preventDefault();
+            const lightOn = $('#light-switch').is(':checked');
+            const brightnessValue = $('#brightness').val();
+
+            // Construct your data object here
+            const data = {
+                "on": { "on": lightOn },
+                "dimming": { "brightness": brightnessValue },
+            };
+
+            sendLightControlRequest(data);
+        });
+    });
+
+
+    function sendLightControlRequest(data) {
+        $.ajax({
+            url: ajax_url,  // Replace with your actual AJAX endpoint URL
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()  // CSRF token for Django
+            },
+            contentType: 'application/json',
+            data: JSON.stringify({ endpoint: endpoint, uuid: uuid, data: data }),
+            success: function (response) {
+                if (response.success) {
+                    // Update the form values based on the response
+                    updateForm(response.lightData);
+                    // Show a success message (using Bootstrap alert or a custom method)
+                    showAlert('Light settings updated successfully.', 'success');
+                } else {
+                    // Handle the case where the server indicates an error in the response
+                    showAlert(response.error || 'An error occurred while updating the light settings.', 'danger');
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                // Handle errors related to the AJAX request itself
+                console.error('Error:', errorThrown);
+                showAlert('Failed to communicate with the server. Please try again.', 'danger');
+            }
+        });
+    }
+
+    function updateForm(lightData) {
+        $('#light-switch').prop('checked', lightData.on.on);
+        $('#brightness').val(lightData.dimming.brightness);
+    }
+
+    function showAlert(message, type) {
+        // Type can be 'success', 'danger', etc. (Bootstrap alert types)
+        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissible fade show" role="alert">' +
+            message +
+            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+            '</div>';
+        $('#alert-container').html(alertHtml);  // Assuming you have a div with id 'alert-container' for showing alerts
+    }
+
+    // function getCookie(name) {
+    //     let cookieValue = null;
+    //     if (document.cookie && document.cookie !== '') {
+    //         const cookies = document.cookie.split(';');
+    //         for (let i = 0; i < cookies.length; i++) {
+    //             const cookie = cookies[i].trim();
+    //             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+    //                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     return cookieValue;
+    // }
+</script>
+<style>
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked+.slider {
+        background-color: #2196F3;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
 <div class="container p-2 m-2">
     <div class="card card-hover">
-        <h2 class="card-header p-1 m-1"> Room - {{room.name}} </h2>
-        <p class="lead">Here are the detail of the room </p>
-    </div>
+        <h2 class="card-header p-1 m-1"> {{room.metadata.name}} </h2>
+        <p class="card-subtitle p-1 m-1">Room ID: {{ room.uuid }}. Here are the detail of the room </p>
+        <div class="card-body p-2 m-2">
+            <form id="light-control-form" method="post" class="form-light-control">
+                {% csrf_token %}
+                <div class="row p-1 m-1">
+                    <!-- Toggle Switch -->
+                    <div class="col-auto my-1">
+                        <label class="switch">
+                            <input type="checkbox" id="light-switch" name="light-switch">
+                            <span class="slider round"></span>
+                        </label>
+                        <label class="form-label ms-2" for="light-switch">Light Switch</label>
+                    </div>
+                    <!-- Brightness Control -->
+                    <div class="col my-1">
+                        <label for="brightness" class="form-label">Brightness</label>
+                        <input type="range" class="form-range" id="brightness" name="brightness" min="0" max="100"
+                            value="{{ brightness }}">
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="col-auto my-1">
+                        <input type="submit" class="btn btn-outline-primary" value="Apply">
+                    </div>
+                </div>
+            </form>
+            <div id="alert-container"></div>
+            <!-- end of form  -->
+        </div>
+        <!-- end of card-body  -->
+        <div class="card-body p-2 m-2">
+            <div class="row p-1 m-1">
+                <table class="table table-responsive  ">
+                    <thead>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Room Status</th>
+                        <th>Devices</th>
+                    <tbody>
 
-    <div class="card-body p-2 m-2">
-        <div class="row p-1 m-1">
-            <button class="btn btn-primary btn-sm" id='updategroups' href="#" value="Turn the groups">Turn On the
-                rooms</button>
+                        <tr>
+                            <td>
+                                {{ room.metadata.name }}
+                            </td>
+                            <td>
+                                {{ room.metadata.archetype }}
+                            </td>
+
+                            <td>
+                                {% for light in grouped_lights %}
+                                <p>On/Off Status: {{ light.on_status }}</p>
+                                <p>Brightness: {{ light.brightness }}</p>
+                                <p>Brightness Delta: {{ light.brightness_delta }}</p>
+                                <p>Signals: {{ light.signals|join:", " }}</p>
+                                <p>Dynamics: {{ light.dynamics|join:", " }}</p>
+                                {% endfor %}
+                            </td>
+                            <td> {% for child in room.children %}
+                                <p>{{child.rtype}}:{{ child.rid }}</p>
+                                {% endfor %}
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- end of row -->
         </div>
 
-        <div class="row p-1 m-1">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>ID</th>
-                    <th>Is On</th>
-                    <th>Brightness</th>
-                    <th>Hue</th>
-                    <th>Saturation</th>
-                <tbody>
+        <hr>
+        <div class="card-body p-1 m-1">
 
-                    <tr>
-                        <td>
-                            {{ room.meta.name }}
-                        </td>
-                        <td>
-                            {{ room.meta.archetype }}
-                        </td>
-                        <td>{{ room.uuid }}</td>
-                        <td>{{ room.is_on }}</td>
-                        <td>{{ room.brightness }}</td>
-                        <td>{{ room.hue }}</td>
-                        <td>{{ room.saturation }}</td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <!-- end of row -->
-
-        <div class=" row p-1 m-1">
             <h4 class="card-title">Control Panels</h4>
             <!-- # create a button holder for one group and one group -->
             <div class="btn-group" role="group" aria-label="Basic example">
@@ -55,8 +257,10 @@
             </div>
 
         </div>
-        <!-- end of container -->
+        <!-- end of row -->
     </div>
+    <!-- end of card -->
 </div>
+<!-- end of container  -->
 
 {% endblock %}

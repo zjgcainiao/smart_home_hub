@@ -9,7 +9,7 @@ from philips_hue.models import MonitorBridge, MonitorLights, Group, HueLight, Hu
 from django.conf import settings
 from celery.utils.log import get_task_logger
 from django.core.exceptions import ValidationError
-
+import json
 from django.db import transaction, IntegrityError
 
 
@@ -29,7 +29,7 @@ def fetch_resource_endpoint_task(endpoint=''):
         dict: The fetched data from the resource endpoint, or None if an error occurred.
     """
     # Validate the endpoint
-    valid_endpoints = ["light", "device", "room", "scene", "zone", "entertainment"]
+    valid_endpoints = ["light", "device", "room",'grouped_light' "scene", "zone", "entertainment"]
     if endpoint and endpoint not in valid_endpoints:
         raise ValueError(f"Invalid endpoint: {endpoint}. Endpoint must be one of {valid_endpoints}.")
 
@@ -64,6 +64,117 @@ def fetch_resource_endpoint_task(endpoint=''):
     except Exception as e:
         logger.error(f"An error occurred while fetching data from {url}: {str(e)}")
         return None
+
+# fetch a specific resource (light, room, device, etc.) 
+# from the Hue API V2 URL pattern: https://<bridge_ip_address>/clip/v2/resource/<endpoint>/<identifier>
+@shared_task
+def fetch_resource_endpoint_detail_task(endpoint, identifier):
+    """
+    Fetches the resource endpoint data from the Philips Hue API V2.
+
+    Args:
+        endpoint (str, optional): The specific endpoint to fetch data from. Defaults to ''.
+
+    Returns:
+        dict: The fetched data from the resource endpoint, or None if an error occurred.
+    """
+    # Validate the endpoint
+    valid_endpoints = ["light", "device", "room",'grouped_light', "scene", "zone", "entertainment"]
+    if endpoint and endpoint not in valid_endpoints:
+        raise ValueError(f"Invalid endpoint: {endpoint}. Endpoint must be one of {valid_endpoints}.")
+
+    # Attempt to fetch bridge info
+    bridge_info = get_bridge_info_from_mdns()
+    if not bridge_info or 'internalipaddress' not in bridge_info:
+        logger.error("Failed to fetch the bridge IP address.")
+        return None
+
+    ip_address = bridge_info['internalipaddress']
+    hue_bridge_username = settings.HUE_BRIDGE_USERNAME2
+
+    headers = {'hue-application-key': hue_bridge_username}
+
+    # Construct the URL based on the endpoint
+    if not endpoint or not identifier:
+        AttributeError("endpoint and identifier must be provided")
+        logger.error("endpoint and identifier must be provided")
+    else:
+        url = f"https://{ip_address}/clip/v2/resource/{endpoint}/{identifier}"
+
+    try:
+        response = requests.get(url, headers=headers, verify=False)
+        if response.status_code == 200:
+            data = response.json()
+            if not data['errors']:
+                data = data['data'] # return a list
+                cache_key = f"hue_{endpoint}_uid_{identifier}"
+                cache.set(cache_key, data, timeout=60*10)  # cache for 10 minutes
+            return data
+        else:
+            error_message = response.json().get('errors', 'Unknown error')
+            logger.error(f"Failed to fetch data from the Hue API V2 url {url}. Status code: {response.status_code}. Error message: {error_message}")
+            return None
+    except Exception as e:
+        logger.error(f"An error occurred while fetching data from {url}: {str(e)}")
+        return None
+
+
+@shared_task
+# PUT to set light and grouped_light resouces by its uuid (`rid`)
+def control_light_resource(endpoint, uuid, data):
+    """
+    Controls a light or grouped light resource.
+
+    :param ip_address: IP address of the Hue Bridge
+    :param endpoint: 'light' or 'grouped_light'
+    :param uuid: UUID of the resource to control
+    :param data: Data payload for the PUT request (e.g., '{"dimming": {"brightness": 100}}')
+    :return: Response data or None
+    """
+    if endpoint not in ['light', 'grouped_light']:
+        raise ValueError("Invalid endpoint. Must be 'light' or 'grouped_light'.")
+    
+    # Attempt to fetch bridge info
+    bridge_info = get_bridge_info_from_mdns()
+    if not bridge_info or 'internalipaddress' not in bridge_info:
+        logger.error("Failed to fetch the bridge IP address.")
+        return None
+
+    ip_address = bridge_info['internalipaddress']
+    hue_bridge_username = settings.HUE_BRIDGE_USERNAME2
+
+# https://192.168.1.43/clip/v2/resource/grouped_light/01904780-2d89-4793-9424-ed5656ad20d4
+    url = f"https://{ip_address}/clip/v2/resource/{endpoint}/{uuid}"
+    hue_bridge_username = config('HUE_BRIDGE_USERNAME2')
+    headers = {
+        'hue-application-key': hue_bridge_username,
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        
+        # Determine which part of the data to send based on 'on' status. Then convert to JSON-like string
+        if 'on' in data and data['on'].get('on') is False:
+            json_data = json.dumps({'on': {'on': False}})
+        elif 'dimming' in data:
+            # Ensure brightness is an integer
+            brightness = int(data['dimming'].get('brightness', 0))
+            json_data = json.dumps({'on': {'on': True}}, {'dimming': {'brightness': brightness}})
+        else:
+            logger.error("No valid control data provided.")
+            return {'status': 'error', 'message': "No valid control data"}
+
+
+        response = requests.put(url, headers=headers, data=json_data, verify=False)
+        if response.status_code == 200:
+            return response.json()['data']
+        else:
+            logger.error(f"Failed to control light resource at {url}. Status code: {response.status_code}. Response: {response.text}")
+            return None
+    except Exception as e:
+        logger.error(f"An error occurred while controlling light resource at {url}: {str(e)}")
+        return None
+
 
 @shared_task
 def save_lights_task(lights_data=[]):

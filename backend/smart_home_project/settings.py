@@ -15,29 +15,15 @@ from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
 from decouple import config, Csv
 
+from decouple import config
+
 load_dotenv(find_dotenv())
 
-logger=logging.getLogger('django')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,"static")
-]
-
-STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),'static-root')
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY WARNING: keep the secret key used in production secret!
 try:
     SECRET_KEY = config("DJANGO_SECRET_KEY")
@@ -51,6 +37,10 @@ DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default="localhost", cast=Csv())
 
+# 'my_app_logs' directory is located at the base of my project
+LOGGING_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOGGING_DIR):
+    os.makedirs(LOGGING_DIR)
 
 
 # add logging to the project
@@ -73,9 +63,11 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'logs/django.log',  # Update this path
+            'level': 'DEBUG' if DEBUG else 'INFO',  # Remember setting to 'INFO' or 'WARNING' for production
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'verbose_app_log.log'),
+            'maxBytes': 1024*1024*5,  # 5 MB
+            'backupCount': 5,
             'formatter': 'verbose',
         },
         'console': {
@@ -93,7 +85,7 @@ LOGGING = {
         # Add any other loggers for your app here
         'django.db': {
             'handlers': ['file', 'console'],
-            'level': 'FATAL',
+            'level': 'WARNING',
             'propagate': True,
         },
         'django.networking': {
@@ -103,7 +95,7 @@ LOGGING = {
         },
         'django.db.backends': {
             'handlers': ['file', 'console'],
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'propagate': True,
         },
         'django.mangement_script': {
@@ -111,8 +103,39 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'django.security': {
+            'handlers': ['file', 'console'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['file', 'console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'philips_hue': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
     },
+    
 }
+
+# set up a logger for the project
+logger=logging.getLogger('django')
+
+logger.info(f'the sytem is running in DEBUG mode: {DEBUG}?....')
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.1/howto/static-files/
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,"static")
+]
+
+STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),'static-root')
 
 
 # Application definition
@@ -166,10 +189,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'smart_home_project.wsgi.application'
 
-
-
 # HUE BRIDGE USERNAME. This is the username that the app will use to connect to the Hue Bridge.
-from decouple import config
+
 
 try:
     HUE_BRIDGE_USERNAME = config('HUE_BRIDGE_USERNAME')
@@ -178,9 +199,9 @@ try:
 except KeyError as e:
     # Handle the absence of both variables
     # Log the error or raise an exception with detailed feedback
-    raise KeyError("Neither 'HUE_BRIDGE_USERNAME' nor 'HUE_BRIDGE_USERNAME2' found in environment variables. }")
-
-
+    raise KeyError("Neither 'HUE_BRIDGE_USERNAME' nor 'HUE_BRIDGE_USERNAME2' found in environment variables...")
+if  HUE_BRIDGE_USERNAME or  HUE_BRIDGE_USERNAME2:
+    logger.info('found existing hue bridge usernames in the env...')
 # CORS settings
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://localhost:3000']
 # CORS_ALLOWED_ORIGIN_REGEXES = [
@@ -194,17 +215,29 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # Helper function to read environment variables
 from smart_home_project.utilities import get_env_variable
+if DEBUG:
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': get_env_variable('DB_DATABSASE1', default='smart_home_hub', required=True),
-        'USER': get_env_variable('DB_APP_USER', required=True).lower(),
-        'PASSWORD': get_env_variable('DB_APP_USER_PASSWORD', required=True),
-        'HOST': get_env_variable('DB_SERVER', default='localhost'),
-        'PORT': get_env_variable('DB_PORT', default='5432'),
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': get_env_variable('DB_DATABSASE1', default='smart_home_hub', required=True),
+            'USER': get_env_variable('DB_APP_USER', required=True).lower(),
+            'PASSWORD': get_env_variable('DB_APP_USER_PASSWORD', required=True),
+            'HOST': get_env_variable('DB_SERVER', default='localhost'),
+            'PORT': get_env_variable('DB_PORT', default='5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': get_env_variable('DB_DATABSASE1', default='smart_home_hub', required=True),
+            'USER': get_env_variable('DB_APP_USER', required=True).lower(),
+            'PASSWORD': get_env_variable('DB_APP_USER_PASSWORD', required=True),
+            'HOST': get_env_variable('DB_SERVER', default='localhost'),
+            'PORT': get_env_variable('DB_PORT', default='5432'),
+        }
+    }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
