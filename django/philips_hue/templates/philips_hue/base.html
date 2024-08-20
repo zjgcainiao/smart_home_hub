@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>Smart Home Server | Home</title>
+    {% load static %}
+    <!-- Favicon -->
+    <!-- <link rel="icon" href="img/core-img/favicon.ico"> -->
+    <!-- <link href="style.css" rel="stylesheet"> -->
+    <!-- Responsive CSS -->
+    <!-- <link href="/{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+
+
+    <!-- jQuery 3.7.1 min.js -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- popover 2.4.1 js and 2.4.1 CSS  -->
+    <script src="
+                https://cdn.jsdelivr.net/npm/popover@2.4.1/popover.min.js
+                "></script>
+    <link href="
+                https://cdn.jsdelivr.net/npm/popover@2.4.1/popover.min.css
+                " rel="stylesheet">
+
+    <!-- bootstrap 5.3.2  bundle min js and 5.3.2 css  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+
+    <!-- Custom CSS for Metallic Look -->
+    <style>
+        .metallic {
+            background: linear-gradient(145deg, 40% rgb(92, 89, 89), 100% rgb(143, 141, 141), 100% rgb(101, 97, 97));
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light metallic">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Stephen Smart Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'philips_hue:dash' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Lights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'philips_hue:room_list' %}">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Personal Assistant</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+</body>
+
+
+</html>
